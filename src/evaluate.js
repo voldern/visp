@@ -41,6 +41,13 @@ var forms = {
     cons: function(args) {
         return [args[0]].concat(args[1]);
     },
+    head: function(args) {
+        if (args[0].length === 0) {
+            throw new error.LispError('Can not head empty list');
+        }
+
+        return args[0].slice(0, 1)[0];
+    },
     tail: function(args) {
         return args[0].slice(1);
     },

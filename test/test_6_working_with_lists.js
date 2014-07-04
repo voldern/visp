@@ -32,6 +32,23 @@ test('creating longer lists with only cons', function(t) {
                  parse('(3 2 1)'));
 });
 
+test('getting first element from list', function(t) {
+    // `head` extracts the first element of a list.
+    t.plan(1);
+
+    t.looseEqual(evaluate(parse("(head '(1 2 3 4 5))")), 1);
+});
+
+test('getting first element from empty list', function(t) {
+    // If the list is empty there is no first element, and `head should raise
+    // an error.
+    t.plan(1);
+
+    t.throws(function() {
+        evaluate(parse('(head (quote ()))'));
+    }, /Can not head empty list/);
+});
+
 test('getting tail of list', function(t) {
     // `tail` returns the tail of the list.
     // The tail is the list retained after removing the first element.
