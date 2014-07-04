@@ -56,3 +56,14 @@ test('getting tail of list', function(t) {
 
     t.looseEqual(evaluate(parse("(tail '(1 2 3))")), [2, 3]);
 });
+
+test('checking whether list is empty', function(t) {
+    // The `empty` form checks whether or not a list is empty.
+    t.plan(4);
+
+    t.equals(evaluate(parse("(empty '(1 2 3))")), false);
+    t.equals(evaluate(parse("(empty '(1))")), false);
+
+    t.equals(evaluate(parse("(empty '())")), true);
+    t.equals(evaluate(parse("(empty (tail '(1)))")), true);
+});

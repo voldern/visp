@@ -51,6 +51,9 @@ var forms = {
     tail: function(args) {
         return args[0].slice(1);
     },
+    empty: function(args) {
+        return args[0].length === 0;
+    },
     '+': function(args) {
         assert.validMathOperation(args, this);
 
