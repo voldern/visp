@@ -1,3 +1,5 @@
+var Closure = require('./closure');
+
 exports.is_boolean = function(x) {
     return typeof x === 'boolean';
 };
@@ -10,11 +12,15 @@ exports.is_symbol = function(x) {
     return typeof x === 'string';
 };
 
+exports.is_closure = function(x) {
+    return (typeof x === 'object' && x instanceof Closure);
+};
+
 exports.is_list = function(x) {
     return Array.isArray(x);
 };
 
 exports.is_atom = function(x) {
     return exports.is_symbol(x) || exports.is_integer(x) ||
-        exports.is_boolean(x);
+        exports.is_boolean(x) || exports.is_closure(x);
 };

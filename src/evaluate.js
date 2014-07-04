@@ -1,6 +1,7 @@
 var ast = require('./ast'),
     assert = require('./assert'),
-    Closure = require('./closure');
+    Closure = require('./closure'),
+    Environment = require('./environment');
 
 var specialForms = {
     quote: function(args) {
@@ -73,19 +74,31 @@ var forms = {
     }
 };
 
+function evaluateList(sexp, env) {
+    return sexp.map(function(param) {
+        return evaluate(param, env);
+    });
+}
+
 function evaluate(sexp, env) {
+    if (typeof env === 'undefined') {
+        env = new Environment();
+    }
+
     if (ast.is_symbol(sexp)) {
         return env.lookup(sexp);
     } else if (!ast.is_list(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {
         return specialForms[sexp[0]].call(sexp, sexp.slice(1), env);
+    } else if (forms.hasOwnProperty(sexp[0])) {
+        return forms[sexp[0]].call(sexp, evaluateList(sexp.slice(1), env));
+    } else if (ast.is_closure(sexp[0])) {
+        return sexp[0].invoke(evaluateList(sexp.slice(1), env), evaluate);
     } else {
-        var params = sexp.slice(1).map(function(param) {
-            return evaluate(param);
-        });
+        var func = evaluate(sexp[0], env);
 
-        return forms[sexp[0]].call(sexp, params);
+        return evaluate([func].concat(sexp.slice(1)), env);
     }
 }
 
