@@ -4,6 +4,13 @@ var ast = require('./ast'),
 var specialForms = {
     quote: function(args) {
         return args[0];
+    },
+    if: function(args) {
+        if (evaluate(args[0]) === true) {
+            return evaluate(args[1]);
+        } else {
+            return evaluate(args[2]);
+        }
     }
 };
 
