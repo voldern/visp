@@ -1,4 +1,5 @@
-var ast = require('./ast');
+var ast = require('./ast'),
+    assert = require('./assert');
 
 var specialForms = {
     quote: function(args) {
@@ -14,24 +15,38 @@ var forms = {
         return args[0] == args[1];
     },
     '+': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] + args[1];
     },
     '-': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] - args[1];
     },
     '/': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return parseInt(args[0] / args[1], 10);
     },
     '*': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] * args[1];
     },
     mod: function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] % args[1];
     },
     '>': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] > args[1];
     },
     '<': function(args) {
+        assert.assert_valid_math_operation(args, this);
+
         return args[0] < args[1];
     }
 };

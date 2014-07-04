@@ -79,3 +79,26 @@ test('basic math operators', function(t) {
     t.equals(evaluate(['>', 7, 7]), false);
     t.equals(evaluate(['<', 5, 7]), true);
 });
+
+test('math operators only work on numbers', function(t) {
+    // The math functions should only allow numbers as arguments.
+    t.plan(4);
+
+    var error = /Integer required/;
+
+    t.throws(function() {
+        evaluate(parse("(+ 1 'foo)"));
+    }, error);
+
+    t.throws(function() {
+        evaluate(parse("(- 1 'foo)"));
+    }, error);
+
+    t.throws(function() {
+        evaluate(parse("(/ 1 'foo)"));
+    }, error);
+
+    t.throws(function() {
+        evaluate(parse("(mod 1 'foo)"));
+    }, error);
+});
