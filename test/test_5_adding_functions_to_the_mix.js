@@ -200,3 +200,12 @@ test('calling atom raises exception', function(t) {
         evaluate(parse('(42)'), new Environment());
     }, /not a function/);
 });
+
+test('test make sure arguments to functions are evaluated', function(t) {
+    // The arguments passed to functions should be evaluated
+    // We should accept parameters that are produced through function
+    // calls.
+    t.plan(1);
+
+    t.equals(evaluate(parse('((lambda (x) x) (+ 1 2))'), new Environment()), 3);
+});
