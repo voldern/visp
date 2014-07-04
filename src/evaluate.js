@@ -1,5 +1,6 @@
 var ast = require('./ast'),
     assert = require('./assert'),
+    error = require('./error'),
     Closure = require('./closure'),
     Environment = require('./environment');
 
@@ -96,9 +97,14 @@ function evaluate(sexp, env) {
     } else if (ast.is_closure(sexp[0])) {
         return sexp[0].invoke(evaluateList(sexp.slice(1), env), evaluate);
     } else {
+        // Does the first element in the list evaluate to a closure?
         var func = evaluate(sexp[0], env);
 
-        return evaluate([func].concat(sexp.slice(1)), env);
+        if (ast.is_closure(func)) {
+            return evaluate([func].concat(sexp.slice(1)), env);
+        } else {
+            throw new error.LispError(sexp[0] + ' not a function');
+        }
     }
 }
 

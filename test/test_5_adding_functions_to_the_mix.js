@@ -184,3 +184,19 @@ test('calling complex expression which evaluates to function', function(t) {
 
     t.equals(evaluate(ast, new Environment({ y: 3 })), 5);
 });
+
+// Now that we have the happy cases working, let's see what should happen when
+// function calls are done incorrectly.
+
+test('calling atom raises exception', function(t) {
+    // A function call to a non-function should result in an error
+    t.plan(2);
+
+    t.throws(function() {
+        evaluate(parse("(#t 'foo 'bar)"), new Environment());
+    }, /not a function/);
+
+    t.throws(function() {
+        evaluate(parse('(42)'), new Environment());
+    }, /not a function/);
+});
