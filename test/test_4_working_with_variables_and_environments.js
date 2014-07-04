@@ -89,3 +89,28 @@ test('redefined variables illegal', function(t) {
         env.set('foo', 2);
     }, /already defined/);
 });
+
+// With the `Environment` working, it's time to implement evaluation of
+// expressions with variables.
+
+test('evaluating symbol', function(t) {
+    // Symbols (other than #t and #f) are treated as variable references.
+    // When evaluating a symbol, the corresponding value should be looked up in
+    // the environment.
+    t.plan(1);
+
+    var env = new Environment({ foo: 42 });
+
+    t.equals(evaluate('foo', env), 42);
+});
+
+test('lookup missing variable', function(t) {
+    // Referencing undefined variables should raise an appropriate exception.
+    // This test should already be working if you implemented the environment
+    // correctly.
+    t.plan(1);
+
+    t.throws(function() {
+        evaluate('my-var', new Environment());
+    }, /my-var not set/);
+});

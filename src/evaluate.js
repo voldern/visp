@@ -58,8 +58,10 @@ var forms = {
     }
 };
 
-function evaluate(sexp) {
-    if (!ast.is_list(sexp)) {
+function evaluate(sexp, env) {
+    if (ast.is_symbol(sexp)) {
+        return env.lookup(sexp);
+    } else if (!ast.is_list(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {
         return specialForms[sexp[0]].call(sexp, sexp.slice(1));
