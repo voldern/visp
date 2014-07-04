@@ -11,14 +11,14 @@ test('creating lists by quoting', function(t) {
     // obviously isn't even a function.
     t.plan(1);
 
-    t.looseEqual(evaluate(parse("'(1 2 3 #t)")), parse('(1 2 3 #t)'));
+    t.looseEquals(evaluate(parse("'(1 2 3 #t)")), parse('(1 2 3 #t)'));
 });
 
 test('creating list with cons', function(t) {
     // The `cons` functions prepends an element to the front of a list.
     t.plan(1);
 
-    t.looseEqual(evaluate(parse("(cons 0 '(1 2 3))")), parse('(0 1 2 3)'));
+    t.looseEquals(evaluate(parse("(cons 0 '(1 2 3))")), parse('(0 1 2 3)'));
 });
 
 test('creating longer lists with only cons', function(t) {
@@ -28,7 +28,7 @@ test('creating longer lists with only cons', function(t) {
     // create the list with their values.
     t.plan(1);
 
-    t.looseEqual(evaluate(parse("(cons 3 (cons (- 4 2) (cons 1 '())))")),
+    t.looseEquals(evaluate(parse("(cons 3 (cons (- 4 2) (cons 1 '())))")),
                  parse('(3 2 1)'));
 });
 
@@ -36,7 +36,7 @@ test('getting first element from list', function(t) {
     // `head` extracts the first element of a list.
     t.plan(1);
 
-    t.looseEqual(evaluate(parse("(head '(1 2 3 4 5))")), 1);
+    t.looseEquals(evaluate(parse("(head '(1 2 3 4 5))")), 1);
 });
 
 test('getting first element from empty list', function(t) {
@@ -54,7 +54,7 @@ test('getting tail of list', function(t) {
     // The tail is the list retained after removing the first element.
     t.plan(1);
 
-    t.looseEqual(evaluate(parse("(tail '(1 2 3))")), [2, 3]);
+    t.looseEquals(evaluate(parse("(tail '(1 2 3))")), [2, 3]);
 });
 
 test('checking whether list is empty', function(t) {
