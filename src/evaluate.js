@@ -9,7 +9,7 @@ var specialForms = {
         return args[0];
     },
     if: function(args, env) {
-        if (evaluate(args[0]) === true) {
+        if (evaluate(args[0], env) === true) {
             return evaluate(args[1], env);
         } else {
             return evaluate(args[2], env);

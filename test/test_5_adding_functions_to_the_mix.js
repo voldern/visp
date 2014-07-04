@@ -222,3 +222,24 @@ test('calling with wrong number of arguments', function(t) {
         evaluate(parse('(fn 1 2 3)'), env);
     }, /Wrong number of arguments, expected 2 got 3/);
 });
+
+// One final test to see that recursive functions are working as expected.
+// The good news: this should already be working by now :)
+
+test('calling function recursively', function(t) {
+    // Tests that a named function is included in the environment
+    // where it is evaluated.
+    t.plan(2);
+
+    var env = new Environment();
+
+    evaluate(parse("(define my-fn\n\
+                   ;; A meaningless, but recursive, function\n\
+                   (lambda (x)\n\
+                   (if (eq x 0)\n\
+                   42\n\
+                   (my-fn (- x 1)))))"), env);
+
+    t.equals(evaluate(parse('(my-fn 0)'), env), 42);
+    t.equals(evaluate(parse('(my-fn 10)'), env), 42);
+});
