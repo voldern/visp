@@ -66,3 +66,28 @@ test('extend returns new environment', function(t) {
     t.equals(env.lookup('foo'), 1);
     t.equals(extended.lookup('foo'), 2);
 });
+
+
+test('set changes environment in place', function(t) {
+    // The extend method should create a new environment, leaving the old one
+    // unchanged.
+    t.plan(1);
+
+    var env = new Environment();
+    env.set('foo', 2);
+
+    t.equals(env.lookup('foo'), 2);
+});
+
+test('redefined variables illegal', function(t) {
+    // Variables can only be defined once.
+    // Setting a variable in an environment where it is already defined should
+    // result in an appropriate error.
+    t.plan(1);
+
+    var env = new Environment({ foo: 1 });
+
+    t.throws(function() {
+        env.set('foo', 2);
+    }, /already defined/);
+});

@@ -14,6 +14,16 @@ Environment.prototype.lookup = function(key) {
     }
 };
 
+Environment.prototype.set = function(key, value) {
+    if (this.vars.hasOwnProperty(key)) {
+        throw new error.LispError(key + ' already defined');
+    }
+
+    this.vars[key] = value;
+
+    return this;
+};
+
 Environment.prototype.extend = function(object) {
     if (typeof object !== 'object') {
         throw new error.LispTypeError('Can only extend with objects');
