@@ -1,0 +1,19 @@
+{
+    "name": "visp",
+    "version": "0.0.1",
+    "description": "Implementation of kvalle/diy-lisp in JS",
+    "author": {
+        "name": "Espen Volden",
+        "email": "voldern@hoeggen.net"
+    },
+    "private": true,
+    "dependencies": {
+    },
+    "devDependencies": {
+        "tape": "2.13.x",
+        "faucet": "0.0.x"
+    },
+    "scripts": {
+        "test": "faucet"
+    }
+}
