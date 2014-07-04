@@ -114,3 +114,18 @@ test('lookup missing variable', function(t) {
         evaluate('my-var', new Environment());
     }, /my-var not set/);
 });
+
+test('define', function(t) {
+    // Test of simple define statement.
+    // The `define` form is used to define new bindings in the environment.
+    // A `define` call should result in a change in the environment. What you
+    // return from evaluating the definition is not important (although it
+    // affects what is printed in the REPL).
+    t.plan(1);
+
+    var env = new Environment();
+
+    evaluate(parse('(define x 1000)'), env);
+
+    t.equals(env.lookup('x'), 1000);
+});

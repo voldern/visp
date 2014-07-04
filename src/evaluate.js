@@ -11,6 +11,13 @@ var specialForms = {
         } else {
             return evaluate(args[2]);
         }
+    },
+    define: function(args, env) {
+        var value = evaluate(args[1], env);
+
+        env.set(args[0], value);
+
+        return value;
     }
 };
 
@@ -64,7 +71,7 @@ function evaluate(sexp, env) {
     } else if (!ast.is_list(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {
-        return specialForms[sexp[0]].call(sexp, sexp.slice(1));
+        return specialForms[sexp[0]].call(sexp, sexp.slice(1), env);
     } else {
         var params = sexp.slice(1).map(function(param) {
             return evaluate(param);
