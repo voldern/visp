@@ -41,6 +41,9 @@ var forms = {
     cons: function(args) {
         return [args[0]].concat(args[1]);
     },
+    tail: function(args) {
+        return args[0].slice(1);
+    },
     '+': function(args) {
         assert.validMathOperation(args, this);
 

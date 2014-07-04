@@ -31,3 +31,11 @@ test('creating longer lists with only cons', function(t) {
     t.looseEqual(evaluate(parse("(cons 3 (cons (- 4 2) (cons 1 '())))")),
                  parse('(3 2 1)'));
 });
+
+test('getting tail of list', function(t) {
+    // `tail` returns the tail of the list.
+    // The tail is the list retained after removing the first element.
+    t.plan(1);
+
+    t.looseEqual(evaluate(parse("(tail '(1 2 3))")), [2, 3]);
+});
