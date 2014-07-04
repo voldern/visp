@@ -28,3 +28,41 @@ test('lookup on missing raises exception', function(t) {
         env.lookup('my-missing-var');
     }, /not set/);
 });
+
+test('lookup from inner env', function(t) {
+    // The `extend` function returns a new environment extended with more
+    // bindings.
+    t.plan(3);
+
+    var env = new Environment({ foo: 42 });
+    env = env.extend({ bar: true });
+
+    t.equals(env.lookup('foo'), 42);
+    t.equals(env.lookup('bar'), true);
+
+    t.throws(function(t) {
+        env.extend(42);
+    }, /Can only extend with objects/);
+});
+
+test('lookup deeply nested var', function(t) {
+    // Extending overwrites old bindings to the same variable name.
+    var env = new Environment({ a: 1 }).extend({ b: 2 }).extend({ c: 3 })
+            .extend({ foo: 100 });
+
+    t.plan(1);
+
+    t.equals(env.lookup('foo'), 100);
+});
+
+test('extend returns new environment', function(t) {
+    // The extend method should create a new environment, leaving the old one
+    // unchanged.
+    var env = new Environment({ foo: 1 }),
+        extended = new Environment({ foo: 2 });
+
+    t.plan(2);
+
+    t.equals(env.lookup('foo'), 1);
+    t.equals(extended.lookup('foo'), 2);
+});
