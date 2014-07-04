@@ -3,7 +3,7 @@ var ast = require('./ast'),
     LispError = require('./error').LispError,
     LispTypeError = require('./error').LispTypeError;
 
-exports.assert_exp_length = function(ast, length) {
+exports.expLength = function(ast, length) {
     if (ast.length > length) {
         throw new LispError('Malformed ' + ast[0] + ', too many arguments: ' + unparse(ast));
     } else if (ast.length < length) {
@@ -11,7 +11,7 @@ exports.assert_exp_length = function(ast, length) {
     }
 };
 
-exports.assert_integer = function(p, exp) {
+exports.integer = function(p, exp) {
     var msg;
 
     if (!ast.is_integer(p)) {
@@ -25,10 +25,10 @@ exports.assert_integer = function(p, exp) {
     }
 };
 
-exports.assert_valid_math_operation = function(args, sexp) {
-    exports.assert_exp_length(args, 2);
+exports.validMathOperation = function(args, sexp) {
+    exports.expLength(args, 2);
 
     args.forEach(function(arg) {
-        exports.assert_integer(arg, sexp);
+        exports.integer(arg, sexp);
     });
 };
