@@ -16,11 +16,9 @@ test('simple lookup', function(t) {
 });
 
 test('lookup on missing raises exception', function(t) {
-    /*
-     When looking up an undefined symbol, an error should be raised.
-     The error message should contain the relevant symbol, and inform that it has
-     not been defined.
-     */
+    // When looking up an undefined symbol, an error should be raised.
+    // The error message should contain the relevant symbol, and inform that it
+    // has not been defined.
     t.plan(1);
 
     t.throws(function() {
@@ -47,10 +45,10 @@ test('lookup from inner env', function(t) {
 
 test('lookup deeply nested var', function(t) {
     // Extending overwrites old bindings to the same variable name.
+    t.plan(1);
+
     var env = new Environment({ a: 1 }).extend({ b: 2 }).extend({ c: 3 })
             .extend({ foo: 100 });
-
-    t.plan(1);
 
     t.equals(env.lookup('foo'), 100);
 });
@@ -58,10 +56,10 @@ test('lookup deeply nested var', function(t) {
 test('extend returns new environment', function(t) {
     // The extend method should create a new environment, leaving the old one
     // unchanged.
-    var env = new Environment({ foo: 1 }),
-        extended = new Environment({ foo: 2 });
-
     t.plan(2);
+
+    var env = new Environment({ foo: 1 });
+    var extended = new Environment({ foo: 2 });
 
     t.equals(env.lookup('foo'), 1);
     t.equals(extended.lookup('foo'), 2);
