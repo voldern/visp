@@ -1,0 +1,3 @@
+(define not
+  (lambda (val)
+    (if val #f #t)))
