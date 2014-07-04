@@ -13,6 +13,8 @@ var specialForms = {
         }
     },
     define: function(args, env) {
+        assert.validDefinition(args);
+
         var value = evaluate(args[1], env);
 
         env.set(args[0], value);

@@ -32,3 +32,11 @@ exports.validMathOperation = function(args, sexp) {
         exports.integer(arg, sexp);
     });
 };
+
+exports.validDefinition = function(d) {
+    if (d.length !== 2) {
+        throw new LispError('Wrong number of arguments for variable definition: ' + unparse(d));
+    } else if (!ast.is_symbol(d[0])) {
+        throw new LispError('Attempted to define non-symbol as variable ' + unparse(d));
+    }
+};

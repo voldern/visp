@@ -129,3 +129,27 @@ test('define', function(t) {
 
     t.equals(env.lookup('x'), 1000);
 });
+
+test('define with wrong number of arguments', function(t) {
+    // Defines should have exactly two arguments, or raise an error
+    t.plan(2);
+
+    var error = /Wrong number of arguments/;
+
+    t.throws(function() {
+        evaluate(parse('(define x)'), new Environment());
+    }, error);
+
+    t.throws(function() {
+        evaluate(parse('(define x 1 2)'));
+    }, error);
+});
+
+test('define with nonsymbol as variable', function(t) {
+    // Defines require the first argument to be a symbol.
+    t.plan(1);
+
+    t.throws(function() {
+        evaluate(parse('(define #t 42)'));
+    }, /Attempted to define non-symbol/);
+});
