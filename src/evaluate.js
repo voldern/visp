@@ -9,6 +9,9 @@ var specialForms = {
 var forms = {
     atom: function(args) {
         return ast.is_atom(args[0]);
+    },
+    eq: function(args) {
+        return args[0] == args[1];
     }
 };
 
