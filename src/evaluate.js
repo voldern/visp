@@ -12,6 +12,27 @@ var forms = {
     },
     eq: function(args) {
         return args[0] == args[1];
+    },
+    '+': function(args) {
+        return args[0] + args[1];
+    },
+    '-': function(args) {
+        return args[0] - args[1];
+    },
+    '/': function(args) {
+        return parseInt(args[0] / args[1], 10);
+    },
+    '*': function(args) {
+        return args[0] * args[1];
+    },
+    mod: function(args) {
+        return args[0] % args[1];
+    },
+    '>': function(args) {
+        return args[0] > args[1];
+    },
+    '<': function(args) {
+        return args[0] < args[1];
     }
 };
 

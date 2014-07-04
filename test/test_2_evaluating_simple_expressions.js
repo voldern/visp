@@ -61,3 +61,21 @@ test('evaluating eq function', function(t) {
     // Lists are never equal, because lists are not atoms
     t.equals(evaluate(parse("(eq '(1 2 3) '(1 2 3))")), false);
 });
+
+test('basic math operators', function(t) {
+    // To be able to do anything useful, we need some basic math operators.
+    // Since we only operate with integers, `/` must represent integer division.
+    // `mod` is the modulo operator.
+    t.plan(10);
+
+    t.equals(evaluate(['+', 2, 2]), 4);
+    t.equals(evaluate(['-', 2, 1]), 1);
+    t.equals(evaluate(['/', 6, 2]), 3);
+    t.equals(evaluate(['/', 7, 2]), 3);
+    t.equals(evaluate(['*', 2, 3]), 6);
+    t.equals(evaluate(['mod', 7, 2]), 1);
+    t.equals(evaluate(['>', 7, 2]), true);
+    t.equals(evaluate(['>', 2, 7]), false);
+    t.equals(evaluate(['>', 7, 7]), false);
+    t.equals(evaluate(['<', 5, 7]), true);
+});
