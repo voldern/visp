@@ -27,3 +27,17 @@ test('evaluating quote', function(t) {
     t.equals(evaluate(['quote', 'foo']), 'foo');
     t.looseEquals(evaluate(['quote', [1, 2, false]]), [1, 2, false]);
 });
+
+test('evaluating atom function', function(t) {
+    // The `atom` form is used to determine whether an expression is an atom.
+    // Atoms are expressions that are not list, i.e. integers, booleans or
+    // symbols. Remember that the argument to `atom` must be evaluated before
+    // the check is done.
+    t.plan(5);
+
+    t.equals(evaluate(['atom', true]), true);
+    t.equals(evaluate(['atom', false]), true);
+    t.equals(evaluate(['atom', 42]), true);
+    t.equals(evaluate(['atom', ['quote', 'foo']]), true);
+    t.equals(evaluate(['atom', ['quote', [1, 2]]]), false);
+});
