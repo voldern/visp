@@ -1,5 +1,6 @@
 var ast = require('./ast'),
-    assert = require('./assert');
+    assert = require('./assert'),
+    Closure = require('./closure');
 
 var specialForms = {
     quote: function(args) {
@@ -20,6 +21,11 @@ var specialForms = {
         env.set(args[0], value);
 
         return value;
+    },
+    lambda: function(args, env) {
+        assert.expLength(args, 2);
+
+        return new Closure(args[1], args[0], env);
     }
 };
 
