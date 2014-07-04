@@ -209,3 +209,16 @@ test('test make sure arguments to functions are evaluated', function(t) {
 
     t.equals(evaluate(parse('((lambda (x) x) (+ 1 2))'), new Environment()), 3);
 });
+
+test('calling with wrong number of arguments', function(t) {
+    // Functions should raise exceptions when called with wrong number of arguments.
+    t.plan(1);
+
+    var env = new Environment();
+
+    evaluate(parse("(define fn (lambda (p1 p2) 'whatever))"), env);
+
+    t.throws(function() {
+        evaluate(parse('(fn 1 2 3)'), env);
+    }, /Wrong number of arguments, expected 2 got 3/);
+});

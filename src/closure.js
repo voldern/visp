@@ -11,6 +11,11 @@ function Closure(body, params, env) {
 }
 
 Closure.prototype.invoke = function(args, evaluateFunc) {
+    if (args.length !== this.params.length) {
+        throw new Error('Wrong number of arguments, expected ' +
+                        this.params.length + ' got ' + args.length);
+    }
+
     return evaluateFunc(this.body, this.env.extend(arrToObj(this.params, args)));
 };
 
