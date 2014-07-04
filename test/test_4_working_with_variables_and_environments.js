@@ -14,3 +14,17 @@ test('simple lookup', function(t) {
 
     t.equals(env.lookup('var'), 42);
 });
+
+test('lookup on missing raises exception', function(t) {
+    /*
+     When looking up an undefined symbol, an error should be raised.
+     The error message should contain the relevant symbol, and inform that it has
+     not been defined.
+     */
+    t.plan(1);
+
+    t.throws(function() {
+        var env = new Environment();
+        env.lookup('my-missing-var');
+    }, /not set/);
+});
