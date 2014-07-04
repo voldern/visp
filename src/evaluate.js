@@ -38,6 +38,9 @@ var forms = {
     eq: function(args) {
         return args[0] == args[1];
     },
+    cons: function(args) {
+        return [args[0]].concat(args[1]);
+    },
     '+': function(args) {
         assert.validMathOperation(args, this);
 
