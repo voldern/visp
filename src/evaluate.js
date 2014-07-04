@@ -7,11 +7,11 @@ var specialForms = {
     quote: function(args) {
         return args[0];
     },
-    if: function(args) {
+    if: function(args, env) {
         if (evaluate(args[0]) === true) {
-            return evaluate(args[1]);
+            return evaluate(args[1], env);
         } else {
-            return evaluate(args[2]);
+            return evaluate(args[2], env);
         }
     },
     define: function(args, env) {

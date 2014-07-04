@@ -168,3 +168,19 @@ test('calling lambda directly', function(t) {
 
     t.equals(evaluate(parse('((lambda (x) x) 42)'), new Environment()), 42);
 });
+
+test('calling complex expression which evaluates to function', function(t) {
+    // Actually, all ASTs that are not atoms should be evaluated and then
+    // called. In this test, a call is done to the if-expression. The `if`
+    // should be evaluated, which will result in a `lambda` expression.
+    // The lambda is evaluated, giving a closure. The result is an AST with a
+    // `closure` as the first element, which we already know how to evaluate.
+    t.plan(1);
+
+    var ast = parse('((if #f\
+                    wont-evaluate-this-branch\
+                    (lambda (x) (+ x y)))\
+                    2)');
+
+    t.equals(evaluate(ast, new Environment({ y: 3 })), 5);
+});
