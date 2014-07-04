@@ -10,6 +10,7 @@
     "dependencies": {
     },
     "devDependencies": {
+        "pegjs": "0.8.x",
         "tape": "2.13.x",
         "faucet": "0.0.x"
     },
