@@ -153,3 +153,14 @@ test('define with nonsymbol as variable', function(t) {
         evaluate(parse('(define #t 42)'));
     }, /Attempted to define non-symbol/);
 });
+
+test('variable lookup after define', function(t) {
+    // Test define and lookup variable in same environment
+    t.plan(1);
+
+    var env = new Environment();
+
+    evaluate(parse('(define foo (+ 2 2))'), env);
+
+    t.equals(evaluate('foo', env), 4);
+});
