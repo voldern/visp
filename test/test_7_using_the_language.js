@@ -41,3 +41,11 @@ test('xor', function(t) {
     t.equals(interpret.string('(xor #f #t)', env), '#t');
     t.equals(interpret.string('(xor #t #t)', env), '#f');
 });
+
+test('greater or equal', function(t) {
+    t.plan(3);
+
+    t.equals(interpret.string('(>= 1 2)', env), '#f');
+    t.equals(interpret.string('(>= 2 2)', env), '#t');
+    t.equals(interpret.string('(>= 3 2)', env), '#t');
+});

@@ -18,3 +18,9 @@
     (if a
         (if b #f #t)
       (if b #t #f))))
+
+(define >=
+  (lambda (a b)
+    (if (or (eq a b) (> a b))
+        #t
+      #f)))
