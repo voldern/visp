@@ -2,11 +2,13 @@ var parse = require('./grammar/parser').parse,
     ast = require('./ast');
 
 exports.parse = function(sexp) {
-    if (!ast.is_list(sexp) || sexp.length === 1) {
-        return parse(sexp)[0];
+    var result = parse(sexp);
+
+    if (!ast.is_list(result) || result.length === 1) {
+        return result[0];
     }
 
-    return parse(sexp);
+    return result;
 };
 
 exports.unparse = function(sexp) {
