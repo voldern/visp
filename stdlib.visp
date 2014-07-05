@@ -42,3 +42,9 @@
     (if (empty list)
         0
       (+ 1 (length (tail list))))))
+
+(define append
+  (lambda (dest source)
+    (if (empty dest)
+        source
+    (cons (head dest) (append (tail dest) source)))))
