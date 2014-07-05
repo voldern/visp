@@ -31,6 +31,10 @@
         #t
       #f)))
 
+(define list
+  (lambda (item)
+    (cons item '())))
+
 (define sum
   (lambda (list)
     (if (empty list)
@@ -64,11 +68,11 @@
       (cons (fn (head list)) (map fn (tail list))))))
 
 (define reverse
-  (lambda (list)
-    (if (empty list)
+  (lambda (items)
+    (if (empty items)
         '()
-      (append (reverse (tail list))
-              (cons (head list) '())))))
+      (append (reverse (tail items))
+              (list (head items))))))
 
 (define range
   (lambda (from to)
