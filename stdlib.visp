@@ -36,3 +36,9 @@
     (if (empty list)
         0
       (+ (head list) (sum (tail list))))))
+
+(define length
+  (lambda (list)
+    (if (empty list)
+        0
+      (+ 1 (length (tail list))))))

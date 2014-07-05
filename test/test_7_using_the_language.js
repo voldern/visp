@@ -65,3 +65,11 @@ test('sum', function(t) {
     t.equals(interpret.string("(sum '(1 2 3 4))", env), '10');
     t.equals(interpret.string("(sum '())", env), '0');
 });
+
+test('length', function(t) {
+    t.plan(3);
+
+    t.equals(interpret.string("(length '(1 1 1 1 1))", env), '5');
+    t.equals(interpret.string("(length '(#t '(1 1 3) 'foo-bar))", env), '3');
+    t.equals(interpret.string("(length '())", env), '0');
+});
