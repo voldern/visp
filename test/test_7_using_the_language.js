@@ -23,3 +23,12 @@ test('or', function(t) {
     t.equals(interpret.string('(or #f #t)', env), '#t');
     t.equals(interpret.string('(or #t #t)', env), '#t');
 });
+
+test('and', function(t) {
+    t.plan(4);
+
+    t.equals(interpret.string('(and #f #f)', env), '#f');
+    t.equals(interpret.string('(and #t #f)', env), '#f');
+    t.equals(interpret.string('(and #f #t)', env), '#f');
+    t.equals(interpret.string('(and #t #t)', env), '#t');
+});

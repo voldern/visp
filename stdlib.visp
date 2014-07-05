@@ -6,3 +6,9 @@
   (lambda (a b)
     (if a #t
       (if b #t #f))))
+
+(define and
+  (lambda (a b)
+    (if a
+        (if b #t #f)
+      #f)))
