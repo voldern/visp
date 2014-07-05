@@ -49,3 +49,11 @@ test('greater or equal', function(t) {
     t.equals(interpret.string('(>= 2 2)', env), '#t');
     t.equals(interpret.string('(>= 3 2)', env), '#t');
 });
+
+test('less or equal', function(t) {
+    t.plan(3);
+
+    t.equals(interpret.string('(<= 1 2)', env), '#t');
+    t.equals(interpret.string('(<= 2 2)', env), '#t');
+    t.equals(interpret.string('(<= 2 1)', env), '#f');
+});
