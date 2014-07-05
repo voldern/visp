@@ -107,3 +107,11 @@ test('reverse', function(t) {
     t.equals(interpret.string("(reverse '(1 2 3 4))", env), '(4 3 2 1)');
     t.equals(interpret.string("(reverse '())", env), '()');
 });
+
+test('range', function(t) {
+    t.plan(3);
+
+    t.equals(interpret.string('(range 1 5)', env), '(1 2 3 4 5)');
+    t.equals(interpret.string('(range 1 1)', env), '(1)');
+    t.equals(interpret.string('(range 2 1)', env), '()');
+});

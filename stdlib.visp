@@ -69,3 +69,9 @@
         '()
       (append (reverse (tail list))
               (cons (head list) '())))))
+
+(define range
+  (lambda (from to)
+    (if (< to from)
+        '()
+    (cons from (range (+ from 1) to)))))
