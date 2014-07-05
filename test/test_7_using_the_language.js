@@ -14,3 +14,12 @@ test('not', function(t) {
     t.equals(interpret.string('(not #f)', env), '#t');
     t.equals(interpret.string('(not #t)', env), '#f');
 });
+
+test('or', function(t) {
+    t.plan(4);
+
+    t.equals(interpret.string('(or #f #f)', env), '#f');
+    t.equals(interpret.string('(or #t #f)', env), '#t');
+    t.equals(interpret.string('(or #f #t)', env), '#t');
+    t.equals(interpret.string('(or #t #t)', env), '#t');
+});

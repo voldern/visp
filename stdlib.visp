@@ -1,3 +1,8 @@
 (define not
   (lambda (val)
     (if val #f #t)))
+
+(define or
+  (lambda (a b)
+    (if a #t
+      (if b #t #f))))
