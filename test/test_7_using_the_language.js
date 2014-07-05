@@ -32,3 +32,12 @@ test('and', function(t) {
     t.equals(interpret.string('(and #f #t)', env), '#f');
     t.equals(interpret.string('(and #t #t)', env), '#t');
 });
+
+test('xor', function(t) {
+    t.plan(4);
+
+    t.equals(interpret.string('(xor #f #f)', env), '#f');
+    t.equals(interpret.string('(xor #t #f)', env), '#t');
+    t.equals(interpret.string('(xor #f #t)', env), '#t');
+    t.equals(interpret.string('(xor #t #t)', env), '#f');
+});

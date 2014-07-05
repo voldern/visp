@@ -12,3 +12,9 @@
     (if a
         (if b #t #f)
       #f)))
+
+(define xor
+  (lambda (a b)
+    (if a
+        (if b #f #t)
+      (if b #t #f))))
