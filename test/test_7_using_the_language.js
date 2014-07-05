@@ -115,3 +115,12 @@ test('range', function(t) {
     t.equals(interpret.string('(range 1 1)', env), '(1)');
     t.equals(interpret.string('(range 2 1)', env), '()');
 });
+
+test('sort', function(t) {
+    t.plan(2);
+
+    t.equals(interpret.string("(sort '(6 3 7 2 4 1 5))", env),
+             "(1 2 3 4 5 6 7)");
+
+    t.equals(interpret.string("(sort '())", env), '()');
+});

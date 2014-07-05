@@ -75,3 +75,13 @@
     (if (< to from)
         '()
     (cons from (range (+ from 1) to)))))
+
+(define sort
+  (lambda (nums)
+    (if (empty nums)
+        '()
+      (append
+       (append
+        (sort (filter (lambda (n) (< n (head nums))) (tail nums)))
+        (cons (head nums) '()))
+       (sort (filter (lambda (n) (>= n (head nums))) (tail nums)))))))
