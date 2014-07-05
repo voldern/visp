@@ -62,3 +62,10 @@
     (if (empty list)
         '()
       (cons (fn (head list)) (map fn (tail list))))))
+
+(define reverse
+  (lambda (list)
+    (if (empty list)
+        '()
+      (append (reverse (tail list))
+              (cons (head list) '())))))

@@ -100,3 +100,10 @@ test('map', function(t) {
 
     t.equals(interpret.string("(map inc '(1 2 3))", env), '(2 3 4)');
 });
+
+test('reverse', function(t) {
+    t.plan(2),
+
+    t.equals(interpret.string("(reverse '(1 2 3 4))", env), '(4 3 2 1)');
+    t.equals(interpret.string("(reverse '())", env), '()');
+});
