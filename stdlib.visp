@@ -30,3 +30,9 @@
     (if (or (eq a b) (< a b))
         #t
       #f)))
+
+(define sum
+  (lambda (list)
+    (if (empty list)
+        0
+      (+ (head list) (sum (tail list))))))

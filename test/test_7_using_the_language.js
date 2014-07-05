@@ -57,3 +57,11 @@ test('less or equal', function(t) {
     t.equals(interpret.string('(<= 2 2)', env), '#t');
     t.equals(interpret.string('(<= 2 1)', env), '#f');
 });
+
+test('sum', function(t) {
+    t.plan(3);
+
+    t.equals(interpret.string("(sum '(1 1 1 1 1))", env), '5');
+    t.equals(interpret.string("(sum '(1 2 3 4))", env), '10');
+    t.equals(interpret.string("(sum '())", env), '0');
+});
