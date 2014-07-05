@@ -81,3 +81,22 @@ test('append', function(t) {
     t.equals(interpret.string("(append '(#t) '(#f 'maybe))", env), "(#t #f 'maybe)");
     t.equals(interpret.string("(append '() '())", env), '()');
 });
+
+test('filter', function(t) {
+    t.plan(1);
+
+    interpret.string("(define even\n\
+                        (lambda (x)\n\
+                          (eq (mod x 2) 0)))", env);
+
+    t.equals(interpret.string("(filter even '(1 2 3 4 5 6))", env), '(2 4 6)');
+});
+
+test('map', function(t) {
+    t.plan(1);
+
+    interpret.string("(define inc\n\
+                        (lambda (x) (+ 1 x)))", env);
+
+    t.equals(interpret.string("(map inc '(1 2 3))", env), '(2 3 4)');
+});

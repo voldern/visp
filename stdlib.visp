@@ -48,3 +48,17 @@
     (if (empty dest)
         source
     (cons (head dest) (append (tail dest) source)))))
+
+(define filter
+  (lambda (fn list)
+    (if (empty list)
+        '()
+      (if (fn (head list))
+          (cons (head list) (filter fn (tail list)))
+        (filter fn (tail list))))))
+
+(define map
+  (lambda (fn list)
+    (if (empty list)
+        '()
+      (cons (fn (head list)) (map fn (tail list))))))
