@@ -4,7 +4,7 @@ var parse = require('./grammar/parser').parse,
 exports.parse = function(sexp) {
     var result = parse(sexp);
 
-    if (!ast.is_list(result) || result.length === 1) {
+    if (!ast.isList(result) || result.length === 1) {
         return result[0];
     }
 
@@ -13,9 +13,9 @@ exports.parse = function(sexp) {
 
 exports.unparse = function(sexp) {
     // Turns AST back into list program
-    if (ast.is_boolean(sexp)) {
+    if (ast.isBoolean(sexp)) {
         return sexp === true ? '#t' : '#f';
-    } else if (ast.is_list(sexp)) {
+    } else if (ast.isList(sexp)) {
         if (sexp.length > 0 && sexp[0] === 'quote') {
             return "'" + exports.unparse(sexp[1]);
         } else {

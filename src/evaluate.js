@@ -33,7 +33,7 @@ var specialForms = {
 
 var forms = {
     atom: function(args) {
-        return ast.is_atom(args[0]);
+        return ast.isAtom(args[0]);
     },
     eq: function(args) {
         return args[0] == args[1];
@@ -102,21 +102,21 @@ function evaluate(sexp, env) {
         env = new Environment();
     }
 
-    if (ast.is_symbol(sexp)) {
+    if (ast.isSymbol(sexp)) {
         return env.lookup(sexp);
-    } else if (!ast.is_list(sexp)) {
+    } else if (!ast.isList(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {
         return specialForms[sexp[0]].call(sexp, sexp.slice(1), env);
     } else if (forms.hasOwnProperty(sexp[0])) {
         return forms[sexp[0]].call(sexp, evaluateList(sexp.slice(1), env));
-    } else if (ast.is_closure(sexp[0])) {
+    } else if (ast.isClosure(sexp[0])) {
         return sexp[0].invoke(evaluateList(sexp.slice(1), env), evaluate);
     } else {
         // Does the first element in the list evaluate to a closure?
         var func = evaluate(sexp[0], env);
 
-        if (ast.is_closure(func)) {
+        if (ast.isClosure(func)) {
             return evaluate([func].concat(sexp.slice(1)), env);
         } else {
             throw new error.LispError(sexp[0] + ' not a function');

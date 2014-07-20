@@ -14,7 +14,7 @@ exports.expLength = function(ast, length) {
 exports.integer = function(p, exp) {
     var msg;
 
-    if (!ast.is_integer(p)) {
+    if (!ast.isInteger(p)) {
         msg = "Integer required, got '" + unparse(p) + "'. ";
 
         if (typeof exp !== 'undefined') {
@@ -36,7 +36,7 @@ exports.validMathOperation = function(args, sexp) {
 exports.validDefinition = function(d) {
     if (d.length !== 2) {
         throw new LispError('Wrong number of arguments for variable definition: ' + unparse(d));
-    } else if (!ast.is_symbol(d[0])) {
+    } else if (!ast.isSymbol(d[0])) {
         throw new LispError('Attempted to define non-symbol as variable ' + unparse(d));
     }
 };
