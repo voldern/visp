@@ -6,6 +6,7 @@ stmt
 
 value
   = int
+  / string
   / keyword
   / quote
   / bool
@@ -29,6 +30,9 @@ list
 
 int "Integer"
   = i:[0-9]+ { return parseInt(i.join(""), 10); }
+
+string "String"
+  = '"' str:[^"\n]+ '"' { return new String(str.join('')); }
 
 bool "Boolean"
   = '#t' { return true; }

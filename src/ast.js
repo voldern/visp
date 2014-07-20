@@ -8,6 +8,10 @@ exports.isInteger = function(x) {
     return typeof x === 'number';
 };
 
+exports.isString = function(x) {
+    return x instanceof String;
+};
+
 exports.isSymbol = function(x) {
     return typeof x === 'string';
 };
@@ -22,5 +26,5 @@ exports.isList = function(x) {
 
 exports.isAtom = function(x) {
     return exports.isSymbol(x) || exports.isInteger(x) ||
-        exports.isBoolean(x) || exports.isClosure(x);
+        exports.isBoolean(x) || exports.isClosure(x) || exports.isString(x);
 };

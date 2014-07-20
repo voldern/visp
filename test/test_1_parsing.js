@@ -30,6 +30,19 @@ test('parse integer', function(t) {
     t.equals(parse('1337'), 1337);
 });
 
+test('parse string', function(t) {
+    // Parse string. Strings are represented in the ASTs as instances of String
+    // objects.
+    t.plan(3);
+
+    t.ok(parse('"Foo"') instanceof String);
+    t.equals(parse('"Foo bar"').valueOf(), 'Foo bar');
+
+    t.throws(function() {
+        parse('"Foo');
+    }, /Expected.*but "\\"" found/);
+});
+
 test('parse list of symbols', function(t) {
     // Parsing list of only symbols.
     // A list is represented by a number of elements surrounded by parens.
@@ -46,7 +59,8 @@ test('parse list of mixed types', function(t) {
     // properly.
     t.plan(1);
 
-    t.looseEquals(parse('(foo #t 123)'), ['foo', true, 123]);
+    t.looseEquals(parse('(foo #t 123 "Test")'), ['foo', true, 123,
+                                                 new String('Test')]);
 });
 
 test('parse on nested list', function(t) {

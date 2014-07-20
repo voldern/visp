@@ -19,13 +19,21 @@ test('evaluating integer', function(t) {
     t.equal(evaluate(42), 42);
 });
 
+test('evaluating string', function(t) {
+    // Strings should evaluate to native strings
+    t.plan(1);
+
+    t.equal(evaluate(new String('Foo')), 'Foo');
+});
+
 test('evaluating quote', function(t) {
     // When a call is done to the `quote` form, the argument should be returned
     // without being evaluated.
     // (quote foo) -> foo
-    t.plan(2);
+    t.plan(3);
 
     t.equals(evaluate(['quote', 'foo']), 'foo');
+    t.looseEquals(evaluate(['quote', new String('Foo')]), new String('Foo'));
     t.looseEquals(evaluate(['quote', [1, 2, false]]), [1, 2, false]);
 });
 
@@ -34,18 +42,19 @@ test('evaluating atom function', function(t) {
     // Atoms are expressions that are not list, i.e. integers, booleans or
     // symbols. Remember that the argument to `atom` must be evaluated before
     // the check is done.
-    t.plan(5);
+    t.plan(6);
 
     t.equals(evaluate(['atom', true]), true);
     t.equals(evaluate(['atom', false]), true);
     t.equals(evaluate(['atom', 42]), true);
+    t.equals(evaluate(['atom', new String('Foo')]), true);
     t.equals(evaluate(['atom', ['quote', 'foo']]), true);
     t.equals(evaluate(['atom', ['quote', [1, 2]]]), false);
 });
 
 test('evaluating eq function', function(t) {
     // The `eq` form is used to check whether two expressions are the same atom.
-    t.plan(5);
+    t.plan(7);
 
     t.equals(evaluate(['eq', 1, 1]), true);
     t.equals(evaluate(['eq', 1, 2]), false);
@@ -57,6 +66,9 @@ test('evaluating eq function', function(t) {
 
     t.equals(evaluate(parse("(eq 'foo 'foo)")), true);
     t.equals(evaluate(parse("(eq 'foo 'bar)")), false);
+
+    t.equals(evaluate(parse('(eq "Foo" "Foo")')), true);
+    t.equals(evaluate(parse('(eq "Foo" "Bar")')), false);
 
     // Lists are never equal, because lists are not atoms
     t.equals(evaluate(parse("(eq '(1 2 3) '(1 2 3))")), false);

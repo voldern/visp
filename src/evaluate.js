@@ -104,6 +104,8 @@ function evaluate(sexp, env) {
 
     if (ast.isSymbol(sexp)) {
         return env.lookup(sexp);
+    } else if (ast.isString(sexp)) {
+        return sexp.valueOf();
     } else if (!ast.isList(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {
