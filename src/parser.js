@@ -21,6 +21,8 @@ exports.unparse = function(sexp) {
         } else {
             return '(' + sexp.map(exports.unparse).join(' ') + ')';
         }
+    } else if (typeof sexp === 'undefined') {
+        return 'undefined';
     } else {
         return sexp.toString();
     }
