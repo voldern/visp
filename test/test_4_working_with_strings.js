@@ -26,3 +26,23 @@ test('joining strings', function(t) {
         evaluate(parse('(join 5 \'(5))'));
     }, /String required/);
 });
+
+test('substr', function(t) {
+    // Use (substr str start [length]) to get a substring of a string
+    t.plan(5);
+
+    t.equals(evaluate(parse('(substr "Foo" 0 1)')), 'F');
+    t.equals(evaluate(parse('(substr "Foo" 1)')), 'oo');
+
+    t.throws(function() {
+        evaluate(parse('(substr 5 0 1)'));
+    }, /String required/);
+
+    t.throws(function() {
+        evaluate(parse('(substr "Foo" "Bar")'));
+    }, /Integer required/);
+
+    t.throws(function() {
+        evaluate(parse('(substr "Foo" 5 "Bar")'));
+    }, /Integer required/);
+});

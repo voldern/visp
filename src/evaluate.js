@@ -106,6 +106,20 @@ var forms = {
         }
 
         return list.join(separator);
+    },
+    substr: function(args) {
+        var length = undefined;
+
+        assert.string(args[0], this);
+        assert.integer(args[1], this);
+
+        if (args.length === 3) {
+            assert.integer(args[2], this);
+
+            length = args[2];
+        }
+
+        return args[0].substr(args[1], args[2]);
     }
 };
 
