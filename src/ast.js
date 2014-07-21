@@ -9,7 +9,7 @@ exports.isInteger = function(x) {
 };
 
 exports.isString = function(x) {
-    return x instanceof String;
+    return typeof x === 'string';
 };
 
 exports.isSymbol = function(x) {

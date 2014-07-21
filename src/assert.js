@@ -25,6 +25,34 @@ exports.integer = function(p, exp) {
     }
 };
 
+exports.string = function(p, exp) {
+    var msg;
+
+    if (!ast.isString(p)) {
+        msg = "String required, got '" + unparse(p) + "'. ";
+
+        if (typeof exp !== 'undefined') {
+            msg += 'Offending expression: ' + unparse(exp);
+        }
+
+        throw new LispTypeError(msg);
+    }
+};
+
+exports.list = function(p, exp) {
+    var msg;
+
+    if (!ast.isList(p)) {
+        msg = "List required, got '" + unparse(p) + "'. ";
+
+        if (typeof exp !== 'undefined') {
+            msg += 'Offending expression: ' + unparse(exp);
+        }
+
+        throw new LispTypeError(msg);
+    }
+};
+
 exports.validMathOperation = function(args, sexp) {
     exports.expLength(args, 2);
 

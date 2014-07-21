@@ -88,6 +88,24 @@ var forms = {
         assert.validMathOperation(args, this);
 
         return args[0] < args[1];
+    },
+    join: function(args) {
+        var separator = '',
+            list;
+
+        if (args.length === 2) {
+            assert.string(args[0], this);
+            assert.list(args[1], this);
+
+            separator = args[0];
+            list = args[1];
+        } else {
+            assert.list(args[0], this);
+
+            list = args[0];
+        }
+
+        return list.join(separator);
     }
 };
 
