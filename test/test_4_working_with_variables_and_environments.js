@@ -101,7 +101,7 @@ test('evaluating symbol', function(t) {
 
     var env = new Environment({ foo: 42 });
 
-    t.equals(evaluate('foo', env), 42);
+    t.equals(evaluate(new String('foo'), env), 42);
 });
 
 test('lookup missing variable', function(t) {
@@ -111,7 +111,7 @@ test('lookup missing variable', function(t) {
     t.plan(1);
 
     t.throws(function() {
-        evaluate('my-var', new Environment());
+        evaluate(new String('my-var'), new Environment());
     }, /my-var not set/);
 });
 
@@ -162,5 +162,5 @@ test('variable lookup after define', function(t) {
 
     evaluate(parse('(define foo (+ 2 2))'), env);
 
-    t.equals(evaluate('foo', env), 4);
+    t.equals(evaluate(new String('foo'), env), 4);
 });

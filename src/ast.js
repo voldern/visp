@@ -13,7 +13,7 @@ exports.isString = function(x) {
 };
 
 exports.isSymbol = function(x) {
-    return typeof x === 'string';
+    return x instanceof String;
 };
 
 exports.isClosure = function(x) {

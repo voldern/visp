@@ -16,7 +16,7 @@ exports.unparse = function(sexp) {
     if (ast.isBoolean(sexp)) {
         return sexp === true ? '#t' : '#f';
     } else if (ast.isList(sexp)) {
-        if (sexp.length > 0 && sexp[0] === 'quote') {
+        if (sexp.length > 0 && sexp[0].valueOf() === 'quote') {
             return "'" + exports.unparse(sexp[1]);
         } else {
             return '(' + sexp.map(exports.unparse).join(' ') + ')';

@@ -36,8 +36,9 @@ test('lambda closure holds function', function(t) {
 
     var closure = evaluate(parse('(lambda (x y) (+ x y))'));
 
-    t.looseEquals(closure.params, ['x', 'y']);
-    t.looseEquals(closure.body, ['+', 'x', 'y']);
+    t.looseEquals(closure.params, [new String('x'), new String('y')]);
+    t.looseEquals(closure.body, [new String('+'), new String('x'),
+                                 new String('y')]);
 });
 
 test('lambda arguments are list', function(t) {

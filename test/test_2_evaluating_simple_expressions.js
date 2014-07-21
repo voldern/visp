@@ -20,10 +20,11 @@ test('evaluating integer', function(t) {
 });
 
 test('evaluating string', function(t) {
-    // Strings should evaluate to native strings
-    t.plan(1);
+    // Strings should evaluate to native strings.
+    t.plan(2);
 
-    t.equal(evaluate(new String('Foo')), 'Foo');
+    t.ok(typeof evaluate('Foo') === 'string');
+    t.equal(evaluate('Foo'), 'Foo');
 });
 
 test('evaluating quote', function(t) {
@@ -47,7 +48,7 @@ test('evaluating atom function', function(t) {
     t.equals(evaluate(['atom', true]), true);
     t.equals(evaluate(['atom', false]), true);
     t.equals(evaluate(['atom', 42]), true);
-    t.equals(evaluate(['atom', new String('Foo')]), true);
+    t.equals(evaluate(['atom', 'Foo']), true);
     t.equals(evaluate(['atom', ['quote', 'foo']]), true);
     t.equals(evaluate(['atom', ['quote', [1, 2]]]), false);
 });

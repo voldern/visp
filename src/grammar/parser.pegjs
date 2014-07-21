@@ -32,17 +32,17 @@ int "Integer"
   = i:[0-9]+ { return parseInt(i.join(""), 10); }
 
 string "String"
-  = '"' str:[^"\n]+ '"' { return new String(str.join('')); }
+  = '"' str:[^"\n]+ '"' { return str.join(''); }
 
 bool "Boolean"
   = '#t' { return true; }
   / '#f' { return false; }
 
 quote
-  = "'" k:value { return ['quote', k]; }
+  = "'" k:value { return [new String('quote'), k]; }
 
 keyword "Keyword"
-  = k:[0-9+\-*=\<\>\/a-z]+ { return k.join(""); }
+  = k:[0-9+\-*=\<\>\/a-z]+ { return new String(k.join("")); }
 
 ws "Whitespace"
   = [ \t\n\r]

@@ -36,7 +36,7 @@ var forms = {
         return ast.isAtom(args[0]);
     },
     eq: function(args) {
-        return args[0] == args[1];
+        return args[0].valueOf() == args[1].valueOf();
     },
     cons: function(args) {
         return [args[0]].concat(args[1]);
@@ -104,8 +104,6 @@ function evaluate(sexp, env) {
 
     if (ast.isSymbol(sexp)) {
         return env.lookup(sexp);
-    } else if (ast.isString(sexp)) {
-        return sexp.valueOf();
     } else if (!ast.isList(sexp)) {
         return sexp;
     } else if (specialForms.hasOwnProperty(sexp[0])) {

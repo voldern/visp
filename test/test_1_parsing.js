@@ -4,11 +4,12 @@ var test = require('tape'),
 
 test('parse single symbol', function(t) {
     // Parsing a single symbol.
-    // Symbols are represented by text strings. Parsing a single atom should
+    // Symbols are represented as strings objects. Parsing a single atom should
     // result in an AST consisting of only that symbol.
-    t.plan(1);
+    t.plan(2);
 
-    t.equals(parse('foo'), 'foo');
+    t.ok(parse('foo') instanceof String);
+    t.equals(parse('foo').valueOf(), 'foo');
 });
 
 test('parse boolean', function(t) {
@@ -31,12 +32,11 @@ test('parse integer', function(t) {
 });
 
 test('parse string', function(t) {
-    // Parse string. Strings are represented in the ASTs as instances of String
-    // objects.
+    // Parse string. Strings are represented in the ASTs as native strings.
     t.plan(3);
 
-    t.ok(parse('"Foo"') instanceof String);
-    t.equals(parse('"Foo bar"').valueOf(), 'Foo bar');
+    t.ok(typeof parse('"Foo"') === 'string');
+    t.equals(parse('"Foo bar"'), 'Foo bar');
 
     t.throws(function() {
         parse('"Foo');
@@ -49,7 +49,8 @@ test('parse list of symbols', function(t) {
     // Arrays are used to represent lists as ASTs.
     t.plan(2);
 
-    t.looseEquals(parse('(foo bar baz)'), ['foo', 'bar', 'baz']);
+    t.looseEquals(parse('(foo bar baz)'), [new String('foo'), new String('bar'),
+                                           new String('baz')]);
     t.looseEquals(parse('()'), []);
 });
 
@@ -59,8 +60,8 @@ test('parse list of mixed types', function(t) {
     // properly.
     t.plan(1);
 
-    t.looseEquals(parse('(foo #t 123 "Test")'), ['foo', true, 123,
-                                                 new String('Test')]);
+    t.looseEquals(parse('(foo #t 123 "Test")'), [new String('foo'), true, 123,
+                                                 'Test']);
 });
 
 test('parse on nested list', function(t) {
@@ -68,9 +69,9 @@ test('parse on nested list', function(t) {
     t.plan(1);
 
     t.looseEquals(parse('(foo (bar ((#t)) x) (baz y))'),
-                  ['foo',
-                   ['bar', [[true]], 'x'],
-                   ['baz', 'y']]);
+                  [new String('foo'),
+                   [new String('bar'), [[true]], new String('x')],
+                   [new String('baz'), new String('y')]]);
 });
 
 test('parse exception missing paren', function(t) {
@@ -98,7 +99,8 @@ test('parse with extra whitespace', function(t) {
     t.plan(1);
 
     t.looseEquals(parse("\n\n   (program   with much   whitespace)\n  "),
-                  ['program', 'with', 'much', 'whitespace']);
+                  [new String('program'), new String('with'),
+                   new String('much'), new String('whitespace')]);
 });
 
 test('parse comments', function(t) {
@@ -112,10 +114,11 @@ test('parse comments', function(t) {
     42 ; inline comment!\n\
     (something else)))";
 
-    t.looseEquals(parse(program), ['define', 'variable',
-                                   ['if', true,
+    t.looseEquals(parse(program), [new String('define'), new String('variable'),
+                                   [new String('if'), true,
                                     42,
-                                    ['something', 'else']]]);
+                                    [new String('something'),
+                                     new String('else')]]]);
 });
 
 test('parse larger example', function(t) {
@@ -131,11 +134,13 @@ test('parse larger example', function(t) {
     (* n (fact (- n 1))))))";
 
     t.looseEquals(parse(program),
-                  ['define', 'fact',
-                   ['lambda', ['n'],
-                    ['if', ['<=', 'n', 1],
+                  [new String('define'), new String('fact'),
+                   [new String('lambda'), [new String('n')],
+                    [new String('if'), [new String('<='), new String('n'), 1],
                      1,
-                     ['*', 'n', ['fact', ['-', 'n', 1]]]]]]);
+                     [new String('*'), new String('n'),
+                      [new String('fact'), [new String('-'), new String('n'),
+                                            1]]]]]]);
 });
 
 test('expand single quoted symbol', function(t) {
@@ -145,17 +150,23 @@ test('expand single quoted symbol', function(t) {
     // '(foo bar) -> (quote (foo bar))
     t.plan(2);
 
-    t.looseEquals(parse("(foo 'nil)"), ['foo', ['quote', 'nil']]);
+    t.looseEquals(parse("(foo 'nil)"), [new String('foo'),
+                                        [new String('quote'), new String('nil')]]);
 
     t.looseEquals(parse("(foo '(bar baz))"),
-                  ['foo', ['quote', ['bar', 'baz']]]);
+                  [new String('foo'), [new String('quote'),
+                                       [new String('bar'),
+                                        new String('baz')]]]);
 });
 
 test('nested quotes', function(t) {
     t.plan(1);
 
     t.looseEquals(parse("''''foo"),
-                  ["quote", ["quote", ["quote", ["quote", "foo"]]]]);
+                  [new String('quote'), [new String('quote'),
+                                         [new String('quote'),
+                                          [new String('quote'),
+                                           new String('foo')]]]]);
 });
 
 test('expand crazy quote combo', function(t) {
