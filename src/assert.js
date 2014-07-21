@@ -3,12 +3,26 @@ var ast = require('./ast'),
     LispError = require('./error').LispError,
     LispTypeError = require('./error').LispTypeError;
 
-exports.expLength = function(ast, length) {
-    if (ast.length > length) {
-        throw new LispError('Malformed ' + ast[0] + ', too many arguments: ' + unparse(ast));
-    } else if (ast.length < length) {
+exports.minExpLength = function(ast, length) {
+    if (ast.length < length) {
         throw new LispError('Malformed ' + ast[0] + ', too few arguments: ' + unparse(ast));
     }
+};
+
+exports.maxExpLength = function(ast, length) {
+    if (ast.length > length) {
+        throw new LispError('Malformed ' + ast[0] + ', too many arguments: ' + unparse(ast));
+    }
+};
+
+exports.expLength = function(ast, length) {
+    exports.minExpLength(ast, length);
+    exports.maxExpLength(ast, length);
+};
+
+exports.expLengthBetween = function(ast, min, max) {
+    exports.minExpLength(ast, min);
+    exports.maxExpLength(ast, max);
 };
 
 exports.integer = function(p, exp) {

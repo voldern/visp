@@ -7,7 +7,7 @@ var test = require('tape'),
 
 test('joining strings', function(t) {
     // Join should return a string of all elements in supplied list
-    t.plan(5);
+    t.plan(7);
 
     t.equals(evaluate(parse('(join \'("Foo" "Bar"))')), 'FooBar');
 
@@ -25,11 +25,19 @@ test('joining strings', function(t) {
     t.throws(function() {
         evaluate(parse('(join 5 \'(5))'));
     }, /String required/);
+
+    t.throws(function() {
+        evaluate(parse('(join)'));
+    }, /too few arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(join 5 \'(5) \'(6))'));
+    }, /too many arguments/);
 });
 
 test('substr', function(t) {
     // Use (substr str start [length]) to get a substring of a string
-    t.plan(5);
+    t.plan(7);
 
     t.equals(evaluate(parse('(substr "Foo" 0 1)')), 'F');
     t.equals(evaluate(parse('(substr "Foo" 1)')), 'oo');
@@ -45,4 +53,12 @@ test('substr', function(t) {
     t.throws(function() {
         evaluate(parse('(substr "Foo" 5 "Bar")'));
     }, /Integer required/);
+
+    t.throws(function() {
+        evaluate(parse('(substr "Foo")'));
+    }, /too few arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(substr "Foo" 1 2 3)'));
+    }, /too many arguments/);
 });

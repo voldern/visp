@@ -93,6 +93,8 @@ var forms = {
         var separator = '',
             list;
 
+        assert.expLengthBetween(this, 2, 3);
+
         if (args.length === 2) {
             assert.string(args[0], this);
             assert.list(args[1], this);
@@ -109,6 +111,8 @@ var forms = {
     },
     substr: function(args) {
         var length = undefined;
+
+        assert.expLengthBetween(this, 3, 4);
 
         assert.string(args[0], this);
         assert.integer(args[1], this);
