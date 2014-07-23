@@ -31,10 +31,6 @@
         #t
       #f)))
 
-(define list
-  (lambda (item)
-    (cons item '())))
-
 (define sum
   (lambda (list)
     (if (empty list)

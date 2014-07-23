@@ -58,12 +58,6 @@ test('less or equal', function(t) {
     t.equals(interpret.string('(<= 2 1)', env), '#f');
 });
 
-test('list', function(t) {
-    t.plan(1);
-
-    t.equals(interpret.string('(list #t)', env), '(#t)');
-});
-
 test('sum', function(t) {
     t.plan(3);
 

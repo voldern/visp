@@ -67,3 +67,11 @@ test('checking whether list is empty', function(t) {
     t.equals(evaluate(parse("(empty '())")), true);
     t.equals(evaluate(parse("(empty (tail '(1)))")), true);
 });
+
+test('creating list using list', function(t) {
+    // The `list` form returns a list with its arguments
+    t.plan(2);
+
+    t.looseEquals(evaluate(parse('(list #t)')), [true]);
+    t.looseEquals(evaluate(parse("(list #t 1 '(1 2))")), [true, 1, [1, 2]]);
+});
