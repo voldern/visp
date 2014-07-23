@@ -124,3 +124,10 @@ test('sort', function(t) {
 
     t.equals(interpret.string("(sort '())", env), '()');
 });
+
+test('capitalize', function(t) {
+    t.plan(2);
+
+    t.equals(interpret.string('(capitalize "foO")', env), 'FoO');
+    t.equals(interpret.string('(capitalize "Foo")', env), 'Foo');
+});

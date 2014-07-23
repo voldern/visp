@@ -85,3 +85,7 @@
         (sort (filter (lambda (n) (< n (head nums))) (tail nums)))
         (cons (head nums) '()))
        (sort (filter (lambda (n) (>= n (head nums))) (tail nums)))))))
+
+(define capitalize
+  (lambda (str)
+    (join (list (upper (substr str 0 1)) (substr str 1)))))
