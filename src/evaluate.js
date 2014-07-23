@@ -124,6 +124,18 @@ var forms = {
         }
 
         return args[0].substr(args[1], args[2]);
+    },
+    upper: function(args) {
+        assert.expLength(this, 2);
+        assert.string(args[0], this);
+
+        return args[0].toUpperCase();
+    },
+    lower: function(args) {
+        assert.expLength(this, 2);
+        assert.string(args[0], this);
+
+        return args[0].toLowerCase();
     }
 };
 

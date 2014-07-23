@@ -62,3 +62,41 @@ test('substr', function(t) {
         evaluate(parse('(substr "Foo" 1 2 3)'));
     }, /too many arguments/);
 });
+
+test('upper', function(t) {
+    // Use (upper str) to uppercase a string
+    t.plan(4);
+
+    t.equals(evaluate(parse('(upper "fOo")')), 'FOO');
+
+    t.throws(function() {
+        evaluate(parse('(upper)'));
+    }, /too few arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(upper 1 2)'));
+    }, /too many arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(upper 1)'));
+    }, /String required/);
+});
+
+test('lower', function(t) {
+    // Use (upper str) to uppercase a string
+    t.plan(4);
+
+    t.equals(evaluate(parse('(lower "FoO")')), 'foo');
+
+    t.throws(function() {
+        evaluate(parse('(lower)'));
+    }, /too few arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(lower 1 2)'));
+    }, /too many arguments/);
+
+    t.throws(function() {
+        evaluate(parse('(lower 1)'));
+    }, /String required/);
+});
