@@ -55,6 +55,14 @@ test('evaluating quasiquote with unquote', function(t) {
     t.looseEquals(evaluate(parse('`(1 ,(+ 1 `,(+ 1 1)))')), [1, 3]);
 });
 
+test('evaluating quasiquote with unquotesplicing', function(t) {
+    // Unquote-splice forms inside quasiquote forms should splice the
+    // list evaluated into the quasiquote
+    t.plan(1);
+
+    t.looseEquals(evaluate(parse('`(1 ,(head \'(1 2)) ,@(tail \'(2 3 4)) ,(+ 1 1))')), [1, 1, 3, 4, 2]);
+});
+
 test('evaluating atom function', function(t) {
     // The `atom` form is used to determine whether an expression is an atom.
     // Atoms are expressions that are not list, i.e. integers, booleans or

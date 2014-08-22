@@ -9,11 +9,19 @@ function expandQuasiquote(args) {
         return ['quote', args];
     }
 
+    if (args[0].toString() === 'unquotesplicing') {
+        throw new error.LispError('Can not splice here');
+    }
+
     if (args[0].toString() === 'unquote') {
         return args[1];
     }
 
-    return ['cons', expandQuasiquote(args[0]), expandQuasiquote(args[1])];
+    if (ast.isList(args[0]) && args[0][0].toString() === 'unquotesplicing') {
+        return ['append', args[0][1], expandQuasiquote(args.slice(1))];
+    }
+
+    return ['cons', expandQuasiquote(args[0]), expandQuasiquote(args.slice(1))];
 }
 
 var specialForms = {
