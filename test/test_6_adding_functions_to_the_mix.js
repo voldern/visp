@@ -118,7 +118,7 @@ test('evaluating call to closure with arguments', function(t) {
     var env = new Environment({});
     var closure = evaluate(parse('(lambda (a b) (+ a b))'), env);
 
-    t.looseEquals(evaluate([closure, 4, 5], env), 9);
+    t.equals(evaluate([closure, 4, 5], env), 9);
 });
 
 test('evaluating call to closure with variable list of arguments', function(t) {
