@@ -4,9 +4,24 @@ var ast = require('./ast'),
     Closure = require('./closure'),
     Environment = require('./environment');
 
+function expandQuasiquote(args) {
+    if (!ast.isList(args) || args.length === 0) {
+        return ['quote', args];
+    }
+
+    if (args[0].toString() === 'unquote') {
+        return args[1];
+    }
+
+    return ['cons', expandQuasiquote(args[0]), expandQuasiquote(args[1])];
+}
+
 var specialForms = {
     quote: function(args) {
         return args[0];
+    },
+    quasiquote: function(args) {
+        return evaluate(expandQuasiquote(args[0]));
     },
     if: function(args, env) {
         if (evaluate(args[0], env) === true) {

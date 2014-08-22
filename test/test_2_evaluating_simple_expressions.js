@@ -38,6 +38,23 @@ test('evaluating quote', function(t) {
     t.looseEquals(evaluate(['quote', [1, 2, false]]), [1, 2, false]);
 });
 
+test('evaluating quasiquote', function(t) {
+    // When a call is done to the `quasiquote` form without any unquote
+    // forms it should behave like quote
+    t.plan(2);
+
+    t.equals(evaluate(['quasiquote', 'foo']), 'foo');
+    t.looseEquals(evaluate(['quasiquote', new String('Foo')]), new String('Foo'));
+});
+
+test('evaluating quasiquote with unquote', function(t) {
+    // Unquote forms inside quasiquote forms should evaluate the unquote forms
+    t.plan(2);
+
+    t.looseEquals(evaluate(parse('`(1 ,(+ 1 1))')), [1, 2]);
+    t.looseEquals(evaluate(parse('`(1 ,(+ 1 `,(+ 1 1)))')), [1, 3]);
+});
+
 test('evaluating atom function', function(t) {
     // The `atom` form is used to determine whether an expression is an atom.
     // Atoms are expressions that are not list, i.e. integers, booleans or
