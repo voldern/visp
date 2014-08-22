@@ -74,14 +74,6 @@ test('length', function(t) {
     t.equals(interpret.string("(length '())", env), '0');
 });
 
-test('append', function(t) {
-    t.plan(3);
-
-    t.equals(interpret.string("(append '(1 2) '(3 4 5))", env), '(1 2 3 4 5)');
-    t.equals(interpret.string("(append '(#t) '(#f 'maybe))", env), "(#t #f 'maybe)");
-    t.equals(interpret.string("(append '() '())", env), '()');
-});
-
 test('filter', function(t) {
     t.plan(1);
 

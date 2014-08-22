@@ -75,3 +75,26 @@ test('creating list using list', function(t) {
     t.looseEquals(evaluate(parse('(list #t)')), [true]);
     t.looseEquals(evaluate(parse("(list #t 1 '(1 2))")), [true, 1, [1, 2]]);
 });
+
+test('appending one list to another', function(t) {
+    // The `append` form appends the content of one list to the other
+    t.plan(5);
+
+    t.looseEquals(evaluate(parse("(append '(1 2) '(3 4))")), [1, 2, 3, 4]);
+
+    t.throws(function() {
+        evaluate(parse("(append '(1))"));
+    }, /too few arguments/);
+
+    t.throws(function() {
+        evaluate(parse("(append '(1) '(2) '(3))"));
+    }, /too many arguments/);
+
+    t.throws(function() {
+        evaluate(parse("(append 1 '(2))"));
+    }, /List required/);
+
+    t.throws(function() {
+        evaluate(parse("(append '(1) 2)"));
+    }, /List required/);
+});

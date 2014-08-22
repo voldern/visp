@@ -66,6 +66,13 @@ var forms = {
     tail: function(args) {
         return args[0].slice(1);
     },
+    append: function(args) {
+        assert.expLength(this, 3);
+        assert.list(args[0], this);
+        assert.list(args[1], this);
+
+        return args[0].concat(args[1]);
+    },
     list: function(args) {
         return args;
     },
