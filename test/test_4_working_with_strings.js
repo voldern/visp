@@ -6,13 +6,16 @@ var test = require('tape'),
 // We need some basic functions for working with strings
 
 test('joining strings', function(t) {
-    // Join should return a string of all elements in supplied list
-    t.plan(7);
+    t.plan(8);
 
+    // Join should return a string of all elements in supplied list
     t.equals(evaluate(parse('(join \'("Foo" "Bar"))')), 'FooBar');
 
     // It should also support a seperator
     t.equals(evaluate(parse('(join "-" \'("Foo" "Bar"))')), 'Foo-Bar');
+
+    // It should convert ints
+    t.equals(evaluate(parse('(join "-" \'(1 2 3))')), '1-2-3');
 
     t.throws(function() {
         evaluate(parse('(join 5)'));
