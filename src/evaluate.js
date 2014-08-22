@@ -113,7 +113,7 @@ var forms = {
         return list.join(separator);
     },
     substr: function(args) {
-        var length = undefined;
+        var length;
 
         assert.expLengthBetween(this, 3, 4);
 
