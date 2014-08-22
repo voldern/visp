@@ -43,15 +43,11 @@ test('lambda closure holds function', function(t) {
 
 test('lambda arguments are list', function(t) {
     // The parameters of a `lambda` should be a list.
-    t.plan(2);
+    t.plan(1);
 
     var closure = evaluate(parse('(lambda (x y) (+ x y))'));
 
     t.ok(Array.isArray(closure.params));
-
-    t.throws(function() {
-        evaluate(parse('(lambda not-a-list (body of fn))'));
-    }, /Closure argument must be a list/);
 });
 
 test('lambda number of arguments', function(t) {
@@ -61,6 +57,22 @@ test('lambda number of arguments', function(t) {
     t.throws(function() {
         evaluate(parse('(lambda (foo) (bar) (baz))'));
     }, /Malformed foo, too many arguments/);
+});
+
+test('lambda variable nubmber of arguments', function(t) {
+    t.plan(1);
+
+    var closure = evaluate(parse('(lambda args (length args))'));
+
+    t.ok(closure.params instanceof String);
+});
+
+test('lambda fails on invalid argument definition', function(t) {
+    t.plan(1);
+
+    t.throws(function() {
+        evaluate(parse('(lambda 55 (body of fn))'));
+    }, /Closure argument must be a list or symbol/);
 });
 
 test('defining lambda with error in body', function(t) {
@@ -107,6 +119,15 @@ test('evaluating call to closure with arguments', function(t) {
     var closure = evaluate(parse('(lambda (a b) (+ a b))'), env);
 
     t.looseEquals(evaluate([closure, 4, 5], env), 9);
+});
+
+test('evaluating call to closure with variable list of arguments', function(t) {
+    t.plan(1);
+
+    var env = new Environment();
+    var closure = evaluate(parse('(lambda args (+ (head args) (head (tail args))))'), env);
+
+    t.equals(evaluate([closure, 4, 5], env), 9);
 });
 
 test('call to function should evaluate arguments', function(t) {

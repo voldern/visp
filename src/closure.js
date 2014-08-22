@@ -1,8 +1,9 @@
-var arrToObj = require('array-to-object');
+var arrToObj = require('array-to-object'),
+    ast = require('./ast');
 
 function Closure(body, params, env) {
-    if (!Array.isArray(params)) {
-        throw new Error('Closure argument must be a list');
+    if (!ast.isList(params) && !ast.isSymbol(params)) {
+        throw new Error('Closure argument must be a list or symbol');
     }
 
     this.body = body;
@@ -11,9 +12,12 @@ function Closure(body, params, env) {
 }
 
 Closure.prototype.invoke = function(args, evaluateFunc) {
-    if (args.length !== this.params.length) {
+    if (ast.isList(this.params) && args.length !== this.params.length) {
         throw new Error('Wrong number of arguments, expected ' +
                         this.params.length + ' got ' + args.length);
+    } else if (ast.isSymbol(this.params)) {
+        this.params = [this.params];
+        args = [args];
     }
 
     return evaluateFunc(this.body, this.env.extend(arrToObj(this.params, args)));
