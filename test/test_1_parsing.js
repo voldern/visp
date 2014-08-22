@@ -177,3 +177,17 @@ test('expand crazy quote combo', function(t) {
 
     t.equals(unparse(parse(source)), source);
 });
+
+
+test('expand quasiquote', function(t) {
+    t.plan(2);
+
+    t.looseEquals(parse('(foo `nil)'),
+                  [new String('foo'),
+                   [new String('quasiquote'), new String('nil')]]);
+
+    t.looseEquals(parse('(foo `(bar baz))'),
+                  [new String('foo'), [new String('quasiquote'),
+                                       [new String('bar'),
+                                        new String('baz')]]]);
+});
