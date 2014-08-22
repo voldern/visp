@@ -178,7 +178,6 @@ test('expand crazy quote combo', function(t) {
     t.equals(unparse(parse(source)), source);
 });
 
-
 test('expand quasiquote', function(t) {
     t.plan(2);
 
@@ -190,4 +189,13 @@ test('expand quasiquote', function(t) {
                   [new String('foo'), [new String('quasiquote'),
                                        [new String('bar'),
                                         new String('baz')]]]);
+});
+
+test('expand unquote', function(t) {
+    t.plan(1);
+
+    t.looseEquals(parse('(foo `(bar ,(baz)))'),
+                  [new String('foo'),
+                   [new String('quasiquote'), [new String('bar'),
+                    [new String('unquote'), [new String('baz')]]]]]);
 });

@@ -10,6 +10,7 @@ value
   / keyword
   / quote
   / quasiquote
+  / unquote
   / bool
   / list
 
@@ -44,6 +45,9 @@ quote
 
 quasiquote
   = "`" k:value { return [new String('quasiquote'), k]; }
+
+unquote
+  = ',' k:value { return [new String('unquote'), k]; }
 
 keyword "Keyword"
   = k:[0-9+\-*=\<\>\/a-z]+ { return new String(k.join("")); }
