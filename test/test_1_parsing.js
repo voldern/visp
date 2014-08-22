@@ -199,3 +199,12 @@ test('expand unquote', function(t) {
                    [new String('quasiquote'), [new String('bar'),
                     [new String('unquote'), [new String('baz')]]]]]);
 });
+
+test('expand unquotesplicing', function(t) {
+    t.plan(1);
+
+    t.looseEquals(parse('(foo `(bar ,@(baz)))'),
+                  [new String('foo'),
+                   [new String('quasiquote'), [new String('bar'),
+                    [new String('unquotesplicing'), [new String('baz')]]]]]);
+});
