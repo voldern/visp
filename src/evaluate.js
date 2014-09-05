@@ -24,6 +24,19 @@ var specialForms = {
     },
     lambda: function(args, env) {
         return new Closure(args[1], args[0], env);
+    },
+    'call-js': function(args) {
+        var params = args[1].map(evaluate).map(function(arg) {
+            if (typeof arg === 'string') {
+                arg = '"' + arg + '"';
+            }
+
+            return arg;
+        });
+
+        var command = args[0] + '(' + params.join(', ') + ')';
+
+        return eval(command);
     }
 };
 

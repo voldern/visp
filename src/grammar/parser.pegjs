@@ -7,6 +7,7 @@ stmt
 value
   = int
   / string
+  / interop
   / keyword
   / quote
   / quasiquote
@@ -55,6 +56,9 @@ unquotesplicing
 
 keyword "Keyword"
   = k:[0-9+\-*=\<\>\/a-z]+ { return new String(k.join("")); }
+
+interop "Interop"
+  = 'js/' k:[0-9\-_a-zA-Z]+ { return new String('js/' + k.join("")); }
 
 ws "Whitespace"
   = [ \t\n\r]

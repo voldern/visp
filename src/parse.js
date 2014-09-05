@@ -97,6 +97,10 @@ function expand(sexp, toplevel) {
                       toplevel);
     }
 
+    if (ast.isSymbol(sexp[0]) && sexp[0].substr(0, 3) === 'js/') {
+        return [new String('call-js'), sexp[0].substr(3), expand(sexp.slice(1))];
+    }
+
     return sexp.map(expand);
 }
 
