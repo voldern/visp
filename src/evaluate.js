@@ -26,6 +26,7 @@ var specialForms = {
         return new Closure(args[1], args[0], env);
     },
     'call-js': function(args) {
+        /*jshint evil:true*/
         var params = args[1].map(evaluate).map(function(arg) {
             if (typeof arg === 'string') {
                 arg = '"' + arg + '"';
@@ -34,7 +35,22 @@ var specialForms = {
             return arg;
         });
 
-        var command = args[0] + '(' + params.join(', ') + ')';
+        var command;
+
+        if (args[0].substr(0, 1) === '.') {
+            command = params[0] + args[0];
+
+            // Check if its a function or a property on the object
+            if (eval('typeof ' + params[0] + '["' + args[0].substr(1) + '"]') === 'function') {
+                assert.minExpLength(args, 2);
+
+                command += '(' + params.slice(1).join(', ') + ')';
+            } else {
+                assert.expLength(args, 2);
+            }
+        } else {
+            command = args[0] + '(' + params.join(', ') + ')';
+        }
 
         return eval(command);
     }
