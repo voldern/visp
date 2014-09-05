@@ -1,8 +1,7 @@
 /*jshint multistr: true*/
 var test = require('tape'),
     parse = require('../src/parse'),
-    evaluate = require('../src/evaluate'),
-    Environment = require('../src/environment');
+    evaluate = require('../src/evaluate');
 
 test('defining and evaluating simple macro', function(t) {
     // The defmacro special form should expand its body. When defined without a special
@@ -27,12 +26,10 @@ test('defining and evaluating simple expanding macro', function(t) {
 test('defining and evaluating unquotesplicing macro', function(t) {
     t.plan(1);
 
-    var env = new Environment();
-
     evaluate(parse('(defmacro foo (lambda strs\n\
                    `(join ,(head strs) \',(tail strs))))'));
 
-    t.equals(evaluate(parse('(foo "-" "f" "o" "o")'), env), "f-o-o");
+    t.equals(evaluate(parse('(foo "-" "f" "o" "o")')), "f-o-o");
 });
 
 test('defining macro outside of top level should fail', function(t) {
