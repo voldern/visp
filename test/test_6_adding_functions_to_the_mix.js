@@ -56,7 +56,7 @@ test('lambda number of arguments', function(t) {
 
     t.throws(function() {
         evaluate(parse('(lambda (foo) (bar) (baz))'));
-    }, /Malformed foo, too many arguments/);
+    }, /Malformed lambda, too many arguments/);
 });
 
 test('lambda variable nubmber of arguments', function(t) {

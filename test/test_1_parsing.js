@@ -183,28 +183,32 @@ test('expand quasiquote', function(t) {
 
     t.looseEquals(parse('(foo `nil)'),
                   [new String('foo'),
-                   [new String('quasiquote'), new String('nil')]]);
+                   [new String('quote'), new String('nil')]]);
 
     t.looseEquals(parse('(foo `(bar baz))'),
-                  [new String('foo'), [new String('quasiquote'),
-                                       [new String('bar'),
-                                        new String('baz')]]]);
+                  [new String('foo'), [new String('cons'),
+                                       [new String('quote'), new String('bar')],
+                                      [new String('cons'),
+                                       [new String('quote'), new String('baz')],
+                                      [new String('quote'), []]]]]);
 });
 
 test('expand unquote', function(t) {
     t.plan(1);
 
     t.looseEquals(parse('(foo `(bar ,(baz)))'),
-                  [new String('foo'),
-                   [new String('quasiquote'), [new String('bar'),
-                    [new String('unquote'), [new String('baz')]]]]]);
+                  [new String('foo'), [new String('cons'),
+                                       [new String('quote'), new String('bar')],
+                                       [new String('cons'), [new String('baz')],
+                                        [new String('quote'), []]]]]);
 });
 
 test('expand unquotesplicing', function(t) {
     t.plan(1);
 
     t.looseEquals(parse('(foo `(bar ,@(baz)))'),
-                  [new String('foo'),
-                   [new String('quasiquote'), [new String('bar'),
-                    [new String('unquotesplicing'), [new String('baz')]]]]]);
+                  [new String('foo'), [new String('cons'),
+                                       [new String('quote'), new String('bar')],
+                                       [new String('append'), [new String('baz')],
+                                        [new String('quote'), []]]]]);
 });

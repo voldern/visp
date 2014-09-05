@@ -4,32 +4,9 @@ var ast = require('./ast'),
     Closure = require('./closure'),
     Environment = require('./environment');
 
-function expandQuasiquote(args) {
-    if (!ast.isList(args) || args.length === 0) {
-        return ['quote', args];
-    }
-
-    if (args[0].toString() === 'unquotesplicing') {
-        throw new error.LispError('Can not splice here');
-    }
-
-    if (args[0].toString() === 'unquote') {
-        return args[1];
-    }
-
-    if (ast.isList(args[0]) && args[0][0].toString() === 'unquotesplicing') {
-        return ['append', args[0][1], expandQuasiquote(args.slice(1))];
-    }
-
-    return ['cons', expandQuasiquote(args[0]), expandQuasiquote(args.slice(1))];
-}
-
 var specialForms = {
     quote: function(args) {
         return args[0];
-    },
-    quasiquote: function(args) {
-        return evaluate(expandQuasiquote(args[0]));
     },
     if: function(args, env) {
         if (evaluate(args[0], env) === true) {
@@ -39,8 +16,6 @@ var specialForms = {
         }
     },
     define: function(args, env) {
-        assert.validDefinition(args);
-
         var value = evaluate(args[1], env);
 
         env.set(args[0], value);
@@ -48,8 +23,6 @@ var specialForms = {
         return value;
     },
     lambda: function(args, env) {
-        assert.expLength(args, 2);
-
         return new Closure(args[1], args[0], env);
     }
 };

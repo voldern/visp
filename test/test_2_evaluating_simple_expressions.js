@@ -43,8 +43,8 @@ test('evaluating quasiquote', function(t) {
     // forms it should behave like quote
     t.plan(2);
 
-    t.equals(evaluate(['quasiquote', 'foo']), 'foo');
-    t.looseEquals(evaluate(['quasiquote', new String('Foo')]), new String('Foo'));
+    t.equals(evaluate(parse('(quasiquote "foo")')), 'foo');
+    t.looseEquals(evaluate(parse('(quasiquote foo)')), new String('foo'));
 });
 
 test('evaluating quasiquote with unquote', function(t) {
