@@ -1,5 +1,5 @@
 var test = require('tape'),
-    parse = require('../src/parser').parse,
+    parse = require('../src/parse'),
     evaluate = require('../src/evaluate'),
     Environment = require('../src/environment'),
     Closure = require('../src/closure');

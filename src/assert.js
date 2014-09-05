@@ -1,5 +1,5 @@
 var ast = require('./ast'),
-    unparse = require('./parser').unparse,
+    unparse = require('./unparse'),
     LispError = require('./error').LispError,
     LispTypeError = require('./error').LispTypeError;
 

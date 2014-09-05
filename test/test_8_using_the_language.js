@@ -1,6 +1,6 @@
 var test = require('tape'),
     path = require('path'),
-    parse = require('../src/parser').parse,
+    parse = require('../src/parse'),
     interpret = require('../src/interpret'),
     Environment = require('../src/environment');
 

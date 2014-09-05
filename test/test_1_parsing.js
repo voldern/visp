@@ -1,6 +1,6 @@
 var test = require('tape'),
-    parse = require('../src/parser').parse,
-    unparse = require('../src/parser').unparse;
+    parse = require('../src/parse'),
+    unparse = require('../src/unparse');
 
 test('parse single symbol', function(t) {
     // Parsing a single symbol.

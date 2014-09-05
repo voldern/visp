@@ -1,5 +1,5 @@
 var test = require('tape'),
-    parse = require('../src/parser').parse,
+    parse = require('../src/parse'),
     evaluate = require('../src/evaluate');
 
 test('creating lists by quoting', function(t) {

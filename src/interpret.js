@@ -1,5 +1,6 @@
 var fs = require('fs'),
-    parser = require('./parser'),
+    parse = require('./parse'),
+    unparse = require('./unparse'),
     evaluate = require('./evaluate'),
     Environment = require('./environment');
 
@@ -8,7 +9,7 @@ exports.string = function(source, env) {
         env = (new Environment()).initializeGlobals();
     }
 
-    var sexps = parser.parse(source);
+    var sexps = parse(source);
     var result;
 
     if (Array.isArray(sexps[0])) {
@@ -19,7 +20,7 @@ exports.string = function(source, env) {
         result = evaluate(sexps, env);
     }
 
-    return parser.unparse(result);
+    return unparse(result);
 };
 
 exports.file = function(file, env) {

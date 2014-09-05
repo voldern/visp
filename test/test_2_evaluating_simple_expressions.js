@@ -1,6 +1,6 @@
 var test = require('tape'),
     evaluate = require('../src/evaluate'),
-    parse = require('../src/parser').parse;
+    parse = require('../src/parse');
 
 // We will start by implementing evaluation of simple expressions.
 
